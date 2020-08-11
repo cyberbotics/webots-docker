@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Intall Webots runtime dependencies
 RUN apt-get update && apt-get install --yes wget
-RUN wget https://raw.githubusercontent.com/cyberbotics/webots/434d23da5ca66b2f8c62fca70699808aa859dcb9/scripts/install/linux_runtime_dependencies.sh
+RUN wget https://raw.githubusercontent.com/cyberbotics/webots/improve-install-script/scripts/install/linux_runtime_dependencies.sh
 RUN chmod +x linux_runtime_dependencies.sh
 RUN ./linux_runtime_dependencies.sh
 RUN rm ./linux_runtime_dependencies.sh
