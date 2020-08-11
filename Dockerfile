@@ -4,6 +4,11 @@ FROM ${BASE_IMAGE}
 # Disable dpkg/gdebi interactive dialogs
 ENV DEBIAN_FRONTEND=noninteractive
 
+# Intall Webots runtime dependencies
+RUN wget https://raw.githubusercontent.com/cyberbotics/webots/master/scripts/install/linux_runtime_dependencies.sh
+RUN ./linux_runtime_dependencies.sh
+RUN rm ./linux_runtime_dependencies.sh
+
 # Install Webots dependencies and build it from sources
 # https://github.com/cyberbotics/webots/wiki/Linux-installation
 WORKDIR /opt
