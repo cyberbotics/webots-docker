@@ -5,7 +5,8 @@ FROM ${BASE_IMAGE}
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Intall Webots runtime dependencies
-RUN curl https://raw.githubusercontent.com/cyberbotics/webots/master/scripts/install/linux_runtime_dependencies.sh
+RUN apt-get update && apt-get install --yes wget
+RUN wget https://raw.githubusercontent.com/cyberbotics/webots/master/scripts/install/linux_runtime_dependencies.sh
 RUN ./linux_runtime_dependencies.sh
 RUN rm ./linux_runtime_dependencies.sh
 
