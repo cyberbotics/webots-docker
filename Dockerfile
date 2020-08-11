@@ -4,12 +4,18 @@ FROM ${BASE_IMAGE}
 # Disable dpkg/gdebi interactive dialogs
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Intall Webots runtime dependencies
+# Install Webots runtime dependencies
 RUN apt-get update && apt-get install --yes wget
 RUN wget https://raw.githubusercontent.com/cyberbotics/webots/improve-install-script/scripts/install/linux_runtime_dependencies.sh
 RUN chmod +x linux_runtime_dependencies.sh
 RUN ./linux_runtime_dependencies.sh
 RUN rm ./linux_runtime_dependencies.sh
+
+# Install Webots
+RUN wget https://github.com/cyberbotics/webots/releases/download/R2020b/webots-R2020b-x86-64_ubuntu-16.04.tar.bz2
+RUN tar xjf webots-R2020b-x86-64_ubuntu-16.04.tar.bz2
+RUN ls
+RUN $PWD
 
 # Install Webots dependencies and build it from sources
 # https://github.com/cyberbotics/webots/wiki/Linux-installation
