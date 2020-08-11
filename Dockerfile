@@ -16,7 +16,5 @@ WORKDIR /usr/local
 RUN wget https://github.com/cyberbotics/webots/releases/download/R2020b/webots-R2020b-x86-64_ubuntu-16.04.tar.bz2
 RUN tar xjf webots-R2020b-x86-64_ubuntu-16.04.tar.bz2
 RUN rm webots-R2020b-x86-64_ubuntu-16.04.tar.bz2
-RUN ls
-RUN echo $PWD
 ENV WEBOTS_HOME /usr/local
 ENV PATH /usr/local/webots:${PATH}
