@@ -12,10 +12,12 @@ RUN ./linux_runtime_dependencies.sh
 RUN rm ./linux_runtime_dependencies.sh
 
 # Install Webots
+WORKDIR /usr/local
 RUN wget https://github.com/cyberbotics/webots/releases/download/R2020b/webots-R2020b-x86-64_ubuntu-16.04.tar.bz2
 RUN tar xjf webots-R2020b-x86-64_ubuntu-16.04.tar.bz2
+RUN rm webots-R2020b-x86-64_ubuntu-16.04.tar.bz2
 RUN ls
-RUN $PWD
+RUN echo $PWD
 
 # Install Webots dependencies and build it from sources
 # https://github.com/cyberbotics/webots/wiki/Linux-installation
