@@ -5,21 +5,21 @@
 Use the following commands to build the docker container from the Dockerfile:
 
 ```
-docker build . --file Dockerfile --tag webots-docker:latest
+docker build . --file Dockerfile --tag webots:latest
 ```
 
 ## Run Docker container
 
 You can run the previously built image with:
 ```
-docker run webots-docker:latest
+docker run webots:latest
 ```
 
 ## Push to Dockerhub
 
 First you have to login:
 ```
-docker login --username=yourhubusername --email=youremail@company.com
+docker login --username=davidmansolino --email=youremail@company.com
 ```
 
 Check the image ID using:
@@ -29,10 +29,21 @@ docker images
 
 Tag the image:
 ```
-docker tag bb38976d03cf yourhubusername/verse_gapminder:firsttry
+docker tag bb38976d03cf davidmansolino/webots:latest
 ```
 
 Push the image to the repository:
 ```
-docker push yourhubusername/verse_gapminder
+docker push davidmansolino/webots
+```
+
+## Run Docker container from Dockerhub
+Get the image:
+```
+docker pull davidmansolino/webots:latest
+```
+
+The run it:
+```
+docker run davidmansolino/webots:latest
 ```
