@@ -47,3 +47,15 @@ The run it:
 ```
 docker run davidmansolino/webots:latest
 ```
+
+## Remove a Docker image
+
+Get the ID
+```
+docker images
+```
+
+Remove it:
+```
+docker rmi IMAGE_ID
+```
