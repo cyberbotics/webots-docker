@@ -8,7 +8,7 @@ Use the following commands to build the docker container from the Dockerfile:
 docker build . --file Dockerfile --tag webots-docker:latest
 ```
 
-## run Docker container
+## Run Docker container
 
 You can run the previously built image with:
 ```
