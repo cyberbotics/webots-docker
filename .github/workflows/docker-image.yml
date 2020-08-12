@@ -2,9 +2,13 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
+    tags:
+      - '*'
   pull_request:
-    branches: [ master ]
+    branches: 
+      - master
 
 env:
   IMAGE_NAME: webots
@@ -39,8 +43,6 @@ jobs:
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
           # Strip git ref prefix from version
           VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-          # Strip "v" prefix from tag name
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
           # Use Docker `latest` tag convention
           [ "$VERSION" == "master" ] && VERSION=latest
           echo IMAGE_ID=$IMAGE_ID
