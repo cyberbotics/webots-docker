@@ -62,9 +62,9 @@ docker rmi -f IMAGE_ID
 
 ## GPU Accleration
 
-Install the following package:
+Install the following packages:
 ```
-nvidia-container-toolkit
+apt install nvidia-cuda-toolkit nvidia-container-toolkit
 ```
 
 Enable connections to server X:
