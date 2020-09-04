@@ -63,6 +63,9 @@ docker rmi -f IMAGE_ID
 ## GPU Accleration
 
 Install the following package: `nvidia-container-toolkit`
+
 Enable connections to server X: `xhost +local:root > /dev/null 2>&1`
+
 Run the container: `docker run --gpus=all -it --privileged -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix:rw --net=host webots:latest /bin/bash`
+
 Disable connections to server X: `xhost -local:root > /dev/null 2>&11`
