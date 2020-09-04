@@ -57,5 +57,5 @@ docker images
 
 Remove it:
 ```
-docker rmi IMAGE_ID
+docker rmi -f IMAGE_ID
 ```
