@@ -18,6 +18,7 @@ RUN tar xjf webots-R2020b-x86-64_ubuntu-16.04.tar.bz2
 RUN rm webots-R2020b-x86-64_ubuntu-16.04.tar.bz2
 ENV WEBOTS_HOME /usr/local
 ENV PATH /usr/local/webots:${PATH}
+sed -i 's/"$webots_home\/bin\/webots-bin" "$@"/"$webots_home\/bin\/webots-bin" --no-sandbox "$@"/g' /usr/local/webots/webots
 
 # Finally open a bash command to let the user interact
 CMD ["/bin/bash"]
