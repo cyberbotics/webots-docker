@@ -62,10 +62,7 @@ docker rmi -f IMAGE_ID
 
 ## GPU Accleration
 
-Install the following packages:
-```
-apt install nvidia-cuda-toolkit nvidia-container-toolkit
-```
+To run GPU accelerated docker images, the `nvidia-docker2` package need to be installed: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#installing-on-ubuntu-and-debian
 
 Enable connections to server X:
 ```
