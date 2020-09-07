@@ -5,11 +5,14 @@ FROM ${BASE_IMAGE}
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Install Webots runtime dependencies
-RUN apt-get update && apt-get install --yes wget
+RUN apt update && apt install --yes wget
 RUN wget https://raw.githubusercontent.com/cyberbotics/webots/improve-install-script/scripts/install/linux_runtime_dependencies.sh
 RUN chmod +x linux_runtime_dependencies.sh
 RUN ./linux_runtime_dependencies.sh
 RUN rm ./linux_runtime_dependencies.sh
+
+# Install X virtual framebuffer to be able to use Webots without GPU and GUI (e.g. CI)
+RUN apt install --yes xvfb
 
 # Install Webots
 WORKDIR /usr/local
