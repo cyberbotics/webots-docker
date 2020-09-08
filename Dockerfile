@@ -4,8 +4,8 @@ FROM ${BASE_IMAGE}
 # Disable dpkg/gdebi interactive dialogs
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Determine Webots version to be used
-ARG WEBOTS_VERSION_ARGUMENT=R2020b-rev1  # default argument that can be overritten by with build argument
+# Determine Webots version to be used and set default argument
+ARG WEBOTS_VERSION_ARGUMENT=R2020b-rev1
 ENV WEBOTS_VERSION=$WEBOTS_VERSION_ARGUMENT
 
 # Install Webots runtime dependencies
