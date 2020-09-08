@@ -6,12 +6,10 @@ on:
       - master
     tags:
       - '*'
-  pull_request:
-    branches: 
-      - master
 
 env:
   IMAGE_NAME: webots
+  VERSION: R2020b
 
 jobs:
   dockerhub-publication:
@@ -19,14 +17,14 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag webots:latest
+      run: docker build . --file Dockerfile --tag webots:R2020b
     - name: Build and push Docker images on Dockerhub
       uses: docker/build-push-action@v1
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-        repository: davidmansolino/webots
-        tags: latest
+        repository: cyberbotics/webots
+        tags: R2020b
   github-publication:
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
