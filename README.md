@@ -8,7 +8,7 @@
 Use the following commands to build the docker container from the Dockerfile:
 
 ```
-docker build . --file Dockerfile --tag webots:latest [--build-arg webots-version=R2020b]
+docker build . --file Dockerfile --tag webots:latest [--build-arg WEBOTS_VERSION=R2020b]
 ```
 
 ## Run Docker container
