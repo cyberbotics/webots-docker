@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Determine Webots version to be used and set default argument
 ARG webots-version=R2020b-rev1
-ENV WEBOTS_VERSION=$webots-version
+ENV WEBOTS_VERSION=$(webots-version)
 
 # Install Webots runtime dependencies
 RUN apt update && apt install --yes wget
