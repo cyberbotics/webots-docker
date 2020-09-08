@@ -15,11 +15,11 @@ You can run the previously built image with:
 docker run -it webots:latest /bin/bash
 ```
 
-## Push to Dockerhub
+## Push Manually to Dockerhub
 
 First you have to login:
 ```
-docker login --username=davidmansolino --email=youremail@company.com
+docker login --username=cyberbotics --email=support@cyberbotics.com
 ```
 
 Check the image ID using:
@@ -29,23 +29,23 @@ docker images
 
 Tag the image:
 ```
-docker tag bb38976d03cf davidmansolino/webots:latest
+docker tag bb38976d03cf cyberbotics/webots:latest
 ```
 
 Push the image to the repository:
 ```
-docker push davidmansolino/webots
+docker push cyberbotics/webots
 ```
 
 ## Run Docker container from Dockerhub
 Get the image:
 ```
-docker pull davidmansolino/webots:latest
+docker pull cyberbotics/webots:latest
 ```
 
 The run it:
 ```
-docker run -it davidmansolino/webots:latest /bin/bash
+docker run -it cyberbotics/webots:latest /bin/bash
 ```
 
 ## Remove a Docker image
@@ -71,7 +71,7 @@ xhost +local:root > /dev/null 2>&1
 
 Run the container:
 ```
-docker run --gpus=all -it -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix:rw davidmansolino/webots:latest /bin/bash
+docker run --gpus=all -it -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix:rw cyberbotics/webots:latest /bin/bash
 ```
 
 Disable connections to server X:
