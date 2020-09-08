@@ -24,6 +24,7 @@ jobs:
         [ "$VERSION" == "master" ] && VERSION=latest
         echo IMAGE_ID=$IMAGE_ID
         echo VERSION=$VERSION
+        echo ::set-env name=VERSION::$VERSION
     - name: test
       run: echo test=$VERSION
     - name: Build the Docker image
