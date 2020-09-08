@@ -1,7 +1,7 @@
 # Webots-Docker
 [![Dockerhub](https://img.shields.io/docker/automated/cyberbotics/webots.svg)](https://hub.docker.com/r/cyberbotics/webots)
-![Test](https://github.com/DavidMansolino/webots-docker/workflows/Test/badge.svg)
-![Docker Image CI](https://github.com/DavidMansolino/webots-docker/workflows/Docker%20Image%20CI/badge.svg)
+[![Test](https://github.com/cyberbotics/webots-docker/workflows/Test/badge.svg)](https://github.com/cyberbotics/webots-docker/actions?query=workflow%3ATest)
+[![Docker Image CI](https://github.com/cyberbotics/webots-docker/workflows/Docker%20Image%20CI/badge.svg)](https://github.com/cyberbotics/webots-docker/actions?query=workflow%3A%22Docker+Image+CI%22)
 
 ## Build
 
