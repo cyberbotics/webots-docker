@@ -9,7 +9,6 @@ on:
 
 env:
   IMAGE_NAME: webots
-  VERSION: R2020b
 
 jobs:
   dockerhub-publication:
