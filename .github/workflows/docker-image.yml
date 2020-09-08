@@ -25,7 +25,7 @@ jobs:
         # Webots version
         [ "$IMAGE_TAG" != "latest" ] && WEBOTS_VERSION=$IMAGE_TAG
         [ "$IMAGE_TAG" == "latest" ] && WEBOTS_VERSION=$DEFAULT_WEBOTS_VERSION
-        echo IMAGE_ID=$IMAGE_ID
+        echo IMAGE_TAG=$IMAGE_TAG
         echo WEBOTS_VERSION=$WEBOTS_VERSION
         echo ::set-env name=IMAGE_TAG::$IMAGE_TAG
         echo ::set-env name=WEBOTS_VERSION::$WEBOTS_VERSION
