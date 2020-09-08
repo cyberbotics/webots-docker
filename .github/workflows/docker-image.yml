@@ -25,6 +25,7 @@ jobs:
         # Webots version
         [ "$IMAGE_TAG" != "latest" ] && WEBOTS_VERSION=$IMAGE_TAG
         [ "$IMAGE_TAG" == "latest" ] && WEBOTS_VERSION=$DEFAULT_WEBOTS_VERSION
+        # Display and save
         echo IMAGE_TAG=$IMAGE_TAG
         echo WEBOTS_VERSION=$WEBOTS_VERSION
         echo ::set-env name=IMAGE_TAG::$IMAGE_TAG
@@ -43,20 +44,30 @@ jobs:
     if: github.event_name == 'push'
     steps:
       - uses: actions/checkout@v2
-      - name: Build image
-        run: docker build . --file Dockerfile --tag $IMAGE_NAME --build-arg WEBOTS_VERSION=$DEFAULT_WEBOTS_VERSION
-      - name: Log into registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
-      - name: Push image
+      - name: Determine Version
         run: |
           IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
           # Change all uppercase to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
           # Strip git ref prefix from version
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          IMAGE_TAG=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
           # Use Docker `latest` tag convention
-          [ "$VERSION" == "master" ] && VERSION=latest
+          [ "$IMAGE_TAG" == "master" ] && IMAGE_TAG=latest
+          # Webots version
+          [ "$IMAGE_TAG" != "latest" ] && WEBOTS_VERSION=$IMAGE_TAG
+          [ "$IMAGE_TAG" == "latest" ] && WEBOTS_VERSION=$DEFAULT_WEBOTS_VERSION
+          # Display and save
           echo IMAGE_ID=$IMAGE_ID
-          echo VERSION=$VERSION
-          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-          docker push $IMAGE_ID:$VERSION
+          echo IMAGE_TAG=$IMAGE_TAG
+          echo WEBOTS_VERSION=$WEBOTS_VERSION
+          echo ::set-env name=IMAGE_ID::$IMAGE_ID
+          echo ::set-env name=IMAGE_TAG::$IMAGE_TAG
+          echo ::set-env name=WEBOTS_VERSION::$WEBOTS_VERSION
+      - name: Build image
+        run: docker build . --file Dockerfile --tag $IMAGE_NAME:$IMAGE_TAG --build-arg WEBOTS_VERSION=$WEBOTS_VERSION
+      - name: Log into registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+      - name: Push image
+        run: |
+          docker tag $IMAGE_NAME $IMAGE_ID:$IMAGE_TAG
+          docker push $IMAGE_ID:$IMAGE_TAG
