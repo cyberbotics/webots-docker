@@ -4,6 +4,10 @@ FROM ${BASE_IMAGE}
 # Disable dpkg/gdebi interactive dialogs
 ENV DEBIAN_FRONTEND=noninteractive
 
+# Determine Webots version to be used
+ARG WEBOTS_VERSION_ARGUMENT=R2020b-rev1  # default argument that can be overritten by with build argument
+ENV WEBOTS_VERSION=$WEBOTS_VERSION_ARGUMENT
+
 # Install Webots runtime dependencies
 RUN apt update && apt install --yes wget
 RUN wget https://raw.githubusercontent.com/cyberbotics/webots/master/scripts/install/linux_runtime_dependencies.sh
@@ -16,9 +20,9 @@ RUN apt install --yes xvfb
 
 # Install Webots
 WORKDIR /usr/local
-RUN wget https://github.com/cyberbotics/webots/releases/download/R2020b/webots-R2020b-x86-64_ubuntu-16.04.tar.bz2
-RUN tar xjf webots-R2020b-x86-64_ubuntu-16.04.tar.bz2
-RUN rm webots-R2020b-x86-64_ubuntu-16.04.tar.bz2
+RUN wget https://github.com/cyberbotics/webots/releases/download/$WEBOTS_VERSION/webots-$WEBOTS_VERSION-x86-64_ubuntu-16.04.tar.bz2
+RUN tar xjf webots-$WEBOTS_VERSION-x86-64_ubuntu-16.04.tar.bz2
+RUN rm webots-$WEBOTS_VERSION-x86-64_ubuntu-16.04.tar.bz2
 RUN sed -i 's/"$webots_home\/bin\/webots-bin" "$@"/"$webots_home\/bin\/webots-bin" --no-sandbox "$@"/g' /usr/local/webots/webots
 ENV WEBOTS_HOME /usr/local
 ENV PATH /usr/local/webots:${PATH}
