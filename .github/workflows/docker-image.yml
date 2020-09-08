@@ -16,7 +16,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag webots:R2020b
+      run: docker build . --file Dockerfile --tag webots:R2020b --build-arg WEBOTS_VERSION_ARGUMENT=R2020b
     - name: Build and push Docker images on Dockerhub
       uses: docker/build-push-action@v1
       with:
