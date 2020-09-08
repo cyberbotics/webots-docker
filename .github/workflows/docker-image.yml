@@ -16,6 +16,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: Determine Version
+      run: |
+        # Strip git ref prefix from version
+        VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+        # Use Docker `latest` tag convention
+        [ "$VERSION" == "master" ] && VERSION=latest
+        echo IMAGE_ID=$IMAGE_ID
+        echo VERSION=$VERSION
+    - name: test
+      run: echo test=$VERSION
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag $IMAGE_NAME:R2020b --build-arg WEBOTS_VERSION=$DEFAULT_WEBOTS_VERSION
     - name: Build and push Docker images on Dockerhub
