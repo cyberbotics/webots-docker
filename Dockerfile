@@ -22,7 +22,7 @@ WORKDIR /usr/local
 RUN wget https://github.com/cyberbotics/webots/releases/download/$WEBOTS_VERSION/webots-$WEBOTS_VERSION-x86-64_ubuntu-16.04.tar.bz2
 RUN tar xjf webots-$WEBOTS_VERSION-x86-64_ubuntu-16.04.tar.bz2
 RUN rm webots-$WEBOTS_VERSION-x86-64_ubuntu-16.04.tar.bz2
-RUN sed -i 's/"$webots_home\/bin\/webots-bin" "$@"/"$webots_home\/bin\/webots-bin" --no-sandbox "$@"/g' /usr/local/webots/webots
+ENV QTWEBENGINE_DISABLE_SANDBOX=1
 ENV WEBOTS_HOME /usr/local
 ENV PATH /usr/local/webots:${PATH}
 
