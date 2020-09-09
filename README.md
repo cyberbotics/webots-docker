@@ -3,7 +3,10 @@
 [![Test](https://github.com/cyberbotics/webots-docker/workflows/Test/badge.svg)](https://github.com/cyberbotics/webots-docker/actions?query=workflow%3ATest)
 [![Docker Image CI](https://github.com/cyberbotics/webots-docker/workflows/Docker%20Image%20CI/badge.svg)](https://github.com/cyberbotics/webots-docker/actions?query=workflow%3A%22Docker+Image+CI%22)
 
-## Build
+This repository is used to create a Docker image with Webots already pre-installed.
+To use the already available image please follow the [Webots installation instructions](https://cyberbotics.com/doc/guide/installation-procedure#installing-the-docker-image).
+
+## Build the Image
 
 Use the following commands to build the docker container from the Dockerfile:
 
@@ -11,73 +14,9 @@ Use the following commands to build the docker container from the Dockerfile:
 docker build . --file Dockerfile --tag webots:latest [--build-arg WEBOTS_VERSION=R2020b]
 ```
 
-## Run Docker container
+## Run a Docker container from the Image
 
 You can run the previously built image with:
 ```
 docker run -it webots:latest /bin/bash
-```
-
-## Push Manually to Dockerhub
-
-First you have to login:
-```
-docker login --username=cyberbotics --email=support@cyberbotics.com
-```
-
-Check the image ID using:
-```
-docker images
-```
-
-Tag the image:
-```
-docker tag bb38976d03cf cyberbotics/webots:latest
-```
-
-Push the image to the repository:
-```
-docker push cyberbotics/webots
-```
-
-## Run Docker container from Dockerhub
-Get the image:
-```
-docker pull cyberbotics/webots:latest
-```
-
-The run it:
-```
-docker run -it cyberbotics/webots:latest /bin/bash
-```
-
-## Remove a Docker image
-
-Get the ID
-```
-docker images
-```
-
-Remove it:
-```
-docker rmi -f IMAGE_ID
-```
-
-## GPU Accleration
-
-To run GPU accelerated docker images, the `nvidia-docker2` package need to be installed: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#installing-on-ubuntu-and-debian
-
-Enable connections to server X:
-```
-xhost +local:root > /dev/null 2>&1
-```
-
-Run the container:
-```
-docker run --gpus=all -it -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix:rw cyberbotics/webots:latest /bin/bash
-```
-
-Disable connections to server X:
-```
-xhost -local:root > /dev/null 2>&1
 ```
