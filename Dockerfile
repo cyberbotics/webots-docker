@@ -20,8 +20,8 @@ RUN apt install --yes xvfb
 # Install Webots
 WORKDIR /usr/local
 RUN wget https://github.com/cyberbotics/webots/releases/download/$WEBOTS_VERSION/webots-$WEBOTS_VERSION-x86-64_ubuntu-16.04.tar.bz2
-RUN tar xjf webots-$WEBOTS_VERSION-x86-64_ubuntu-16.04.tar.bz2
-RUN rm webots-$WEBOTS_VERSION-x86-64_ubuntu-16.04.tar.bz2
+RUN tar xjf webots-*.tar.bz2
+RUN rm webots-*.tar.bz2
 ENV QTWEBENGINE_DISABLE_SANDBOX=1
 ENV WEBOTS_HOME /usr/local
 ENV PATH /usr/local/webots:${PATH}
