@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        UBUNTU_VERSION: [18.04, 16.04]
+        UBUNTU_VERSION: [18.04, 20.04]
     steps:
       - uses: actions/checkout@v2
       - name: Run tests
