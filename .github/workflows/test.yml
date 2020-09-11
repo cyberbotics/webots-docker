@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        UBUNTU_VERSION: [18.04, 20.04]
+        BASE_IMAGE: [nvidia/cudagl:10.0-devel-ubuntu18.04, nvidia/cudagl:11.0-devel-ubuntu20.04]
     steps:
       - uses: actions/checkout@v2
       - name: Run tests
@@ -19,5 +19,5 @@ jobs:
             docker-compose --file docker-compose.test.yml build
             docker-compose --file docker-compose.test.yml run sut
           else
-            docker build . --file Dockerfile --build-arg UBUNTU_VERSION=${{ matrix.UBUNTU_VERSION }}
+            docker build . --file Dockerfile --build-arg BASE_IMAGE=${{ matrix.BASE_IMAGE }}
           fi
