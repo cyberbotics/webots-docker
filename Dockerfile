@@ -1,5 +1,5 @@
-ARG UBUNTU_VERSION=18.04
-FROM nvidia/cudagl:10.0-devel-ubuntu${UBUNTU_VERSION}
+ARG BASE_IMAGE=nvidia/cudagl:10.0-devel-ubuntu18.04
+FROM ${BASE_IMAGE}
 
 # Disable dpkg/gdebi interactive dialogs
 ENV DEBIAN_FRONTEND=noninteractive
