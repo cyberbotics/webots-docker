@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=nvidia/cudagl:11.0-devel-ubuntu12.04
+ARG BASE_IMAGE=nvidia/cudagl:11.0-devel-ubuntu20.04
 FROM ${BASE_IMAGE}
 
 # Disable dpkg/gdebi interactive dialogs
@@ -20,7 +20,7 @@ RUN apt install --yes xvfb
 
 # Install Webots
 WORKDIR /usr/local
-RUN wget https://github.com/cyberbotics/webots/releases/download/$WEBOTS_VERSION/webots-$WEBOTS_VERSION-x86-64$WEBOTS_PACKAGE_PREFIX-16.04.tar.bz2
+RUN wget https://github.com/cyberbotics/webots/releases/download/$WEBOTS_VERSION/webots-$WEBOTS_VERSION-x86-64$WEBOTS_PACKAGE_PREFIX.tar.bz2
 RUN tar xjf webots-*.tar.bz2
 RUN rm webots-*.tar.bz2
 ENV QTWEBENGINE_DISABLE_SANDBOX=1
