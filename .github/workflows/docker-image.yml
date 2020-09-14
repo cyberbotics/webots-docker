@@ -25,11 +25,11 @@ jobs:
     - name: Determine Version
       run: |
         # Strip git ref prefix from version
-        IMAGE_TAG=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')-$(cut -d'-' -f3 <<<"${{ matrix.BASE_IMAGE }}")
+        IMAGE_TAG=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
         # Use Docker `latest` tag convention
         [ "$IMAGE_TAG" == "master" ] && IMAGE_TAG=latest
         # Webots version
-        [ "$IMAGE_TAG" != "latest" ] && WEBOTS_VERSION=$IMAGE_TAG
+        [ "$IMAGE_TAG" != "latest" ] && WEBOTS_VERSION=$IMAGE_TAG && IMAGE_TAG=$IMAGE_TAG-$(cut -d'-' -f3 <<<"${{ matrix.BASE_IMAGE }}")
         [ "$IMAGE_TAG" == "latest" ] && WEBOTS_VERSION=$DEFAULT_WEBOTS_VERSION
         # Display and save
         echo IMAGE_TAG=$IMAGE_TAG
@@ -61,11 +61,11 @@ jobs:
           # Change all uppercase to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
           # Strip git ref prefix from version
-          IMAGE_TAG=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')-$(cut -d'-' -f3 <<<"${{ matrix.BASE_IMAGE }}")
+          IMAGE_TAG=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
           # Use Docker `latest` tag convention
           [ "$IMAGE_TAG" == "master" ] && IMAGE_TAG=latest
           # Webots version
-          [ "$IMAGE_TAG" != "latest" ] && WEBOTS_VERSION=$IMAGE_TAG
+          [ "$IMAGE_TAG" != "latest" ] && WEBOTS_VERSION=$IMAGE_TAG && IMAGE_TAG=$IMAGE_TAG-$(cut -d'-' -f3 <<<"${{ matrix.BASE_IMAGE }}")
           [ "$IMAGE_TAG" == "latest" ] && WEBOTS_VERSION=$DEFAULT_WEBOTS_VERSION
           # Display and save
           echo IMAGE_ID=$IMAGE_ID
