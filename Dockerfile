@@ -19,8 +19,7 @@ RUN apt update && apt install --yes xvfb && rm -rf /var/lib/apt/lists/
 # Install Webots
 WORKDIR /usr/local
 RUN wget https://github.com/cyberbotics/webots/releases/download/$WEBOTS_VERSION/webots-$WEBOTS_VERSION-x86-64$WEBOTS_PACKAGE_PREFIX.tar.bz2
-RUN tar xjf webots-*.tar.bz2
-RUN rm webots-*.tar.bz2
+RUN tar xjf webots-*.tar.bz2 && rm webots-*.tar.bz2
 ENV QTWEBENGINE_DISABLE_SANDBOX=1
 ENV WEBOTS_HOME /usr/local
 ENV PATH /usr/local/webots:${PATH}
