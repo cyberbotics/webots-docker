@@ -9,14 +9,12 @@ ARG WEBOTS_VERSION=R2020b-rev1
 ARG WEBOTS_PACKAGE_PREFIX=
 
 # Install Webots runtime dependencies
-RUN apt update && apt install --yes wget
+RUN apt update && apt install --yes wget && rm -rf /var/lib/apt/lists/
 RUN wget https://raw.githubusercontent.com/cyberbotics/webots/master/scripts/install/linux_runtime_dependencies.sh
-RUN chmod +x linux_runtime_dependencies.sh
-RUN ./linux_runtime_dependencies.sh
-RUN rm ./linux_runtime_dependencies.sh
+RUN chmod +x linux_runtime_dependencies.sh && ./linux_runtime_dependencies.sh && rm ./linux_runtime_dependencies.sh && rm -rf /var/lib/apt/lists/
 
 # Install X virtual framebuffer to be able to use Webots without GPU and GUI (e.g. CI)
-RUN apt install --yes xvfb
+RUN apt update && apt install --yes xvfb && rm -rf /var/lib/apt/lists/
 
 # Install Webots
 WORKDIR /usr/local
