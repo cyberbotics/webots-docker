@@ -14,6 +14,12 @@ env:
 jobs:
   dockerhub-publication:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        BASE_IMAGE: ["nvidia/cudagl:10.0-devel-ubuntu18.04", "nvidia/cudagl:11.0-devel-ubuntu20.04"]
+        include:
+          - BASE_IMAGE: "nvidia/cudagl:10.0-devel-ubuntu18.04"
+            WEBOTS_PACKAGE_PREFIX: "_ubuntu-16.04"
     steps:
     - uses: actions/checkout@v2
     - name: Determine Version
@@ -23,7 +29,7 @@ jobs:
         # Use Docker `latest` tag convention
         [ "$IMAGE_TAG" == "master" ] && IMAGE_TAG=latest
         # Webots version
-        [ "$IMAGE_TAG" != "latest" ] && WEBOTS_VERSION=$IMAGE_TAG
+        [ "$IMAGE_TAG" != "latest" ] && WEBOTS_VERSION=$IMAGE_TAG && IMAGE_TAG=$IMAGE_TAG-$(cut -d'-' -f3 <<<"${{ matrix.BASE_IMAGE }}")
         [ "$IMAGE_TAG" == "latest" ] && WEBOTS_VERSION=$DEFAULT_WEBOTS_VERSION
         # Display and save
         echo IMAGE_TAG=$IMAGE_TAG
@@ -31,7 +37,7 @@ jobs:
         echo ::set-env name=IMAGE_TAG::$IMAGE_TAG
         echo ::set-env name=WEBOTS_VERSION::$WEBOTS_VERSION
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag $IMAGE_NAME:$IMAGE_TAG --build-arg WEBOTS_VERSION=$WEBOTS_VERSION
+      run: docker build . --file Dockerfile --tag $IMAGE_NAME:$IMAGE_TAG --build-arg WEBOTS_VERSION=$WEBOTS_VERSION --build-arg BASE_IMAGE=${{ matrix.BASE_IMAGE }} --build-arg WEBOTS_PACKAGE_PREFIX=${{ matrix.WEBOTS_PACKAGE_PREFIX }}
     - name: Log into registry
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login --username=${{ secrets.DOCKER_USERNAME }} --password-stdin
     - name: Push image
@@ -40,6 +46,12 @@ jobs:
         docker push ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:$IMAGE_TAG
   github-publication:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        BASE_IMAGE: ["nvidia/cudagl:10.0-devel-ubuntu18.04", "nvidia/cudagl:11.0-devel-ubuntu20.04"]
+        include:
+          - BASE_IMAGE: "nvidia/cudagl:10.0-devel-ubuntu18.04"
+            WEBOTS_PACKAGE_PREFIX: "_ubuntu-16.04"
     if: github.event_name == 'push'
     steps:
       - uses: actions/checkout@v2
@@ -53,17 +65,17 @@ jobs:
           # Use Docker `latest` tag convention
           [ "$IMAGE_TAG" == "master" ] && IMAGE_TAG=latest
           # Webots version
-          [ "$IMAGE_TAG" != "latest" ] && WEBOTS_VERSION=$IMAGE_TAG
+          [ "$IMAGE_TAG" != "latest" ] && WEBOTS_VERSION=$IMAGE_TAG && IMAGE_TAG=$IMAGE_TAG-$(cut -d'-' -f3 <<<"${{ matrix.BASE_IMAGE }}")
           [ "$IMAGE_TAG" == "latest" ] && WEBOTS_VERSION=$DEFAULT_WEBOTS_VERSION
           # Display and save
           echo IMAGE_ID=$IMAGE_ID
           echo IMAGE_TAG=$IMAGE_TAG
           echo WEBOTS_VERSION=$WEBOTS_VERSION
           echo ::set-env name=IMAGE_ID::$IMAGE_ID
-          echo ::set-env name=IMAGE_TAG::$IMAGE_TAG
+          echo ::set-env name=IMAGE_TAG::$IMAGE_TAG-ubuntu${{ matrix.UBUNTU_VERSION }}
           echo ::set-env name=WEBOTS_VERSION::$WEBOTS_VERSION
       - name: Build image
-        run: docker build . --file Dockerfile --tag $IMAGE_NAME:$IMAGE_TAG --build-arg WEBOTS_VERSION=$WEBOTS_VERSION
+        run: docker build . --file Dockerfile --tag $IMAGE_NAME:$IMAGE_TAG --build-arg WEBOTS_VERSION=$WEBOTS_VERSION --build-arg BASE_IMAGE=${{ matrix.BASE_IMAGE }} --build-arg WEBOTS_PACKAGE_PREFIX=${{ matrix.WEBOTS_PACKAGE_PREFIX }}
       - name: Log into registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
       - name: Push image
