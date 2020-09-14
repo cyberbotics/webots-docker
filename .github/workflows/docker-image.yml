@@ -16,7 +16,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        UBUNTU_VERSION: [18.04, 20.04]
+        BASE_IMAGE: ["nvidia/cudagl:10.0-devel-ubuntu18.04", "nvidia/cudagl:11.0-devel-ubuntu20.04"]
+        include:
+          - BASE_IMAGE: "nvidia/cudagl:10.0-devel-ubuntu18.04"
+            WEBOTS_PACKAGE_PREFIX: "_ubuntu-16.04"
     steps:
     - uses: actions/checkout@v2
     - name: Determine Version
@@ -34,7 +37,7 @@ jobs:
         echo ::set-env name=IMAGE_TAG::$IMAGE_TAG-ubuntu${{ matrix.UBUNTU_VERSION }}
         echo ::set-env name=WEBOTS_VERSION::$WEBOTS_VERSION
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag $IMAGE_NAME:$IMAGE_TAG --build-arg WEBOTS_VERSION=$WEBOTS_VERSION --build-arg UBUNTU_VERSION=${{ matrix.UBUNTU_VERSION }}
+      run: docker build . --file Dockerfile --tag $IMAGE_NAME:$IMAGE_TAG --build-arg WEBOTS_VERSION=$WEBOTS_VERSION --build-arg BASE_IMAGE=${{ matrix.BASE_IMAGE }} --build-arg WEBOTS_PACKAGE_PREFIX=${{ matrix.WEBOTS_PACKAGE_PREFIX }}
     - name: Log into registry
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login --username=${{ secrets.DOCKER_USERNAME }} --password-stdin
     - name: Push image
@@ -45,7 +48,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        UBUNTU_VERSION: [18.04, 20.04]
+        BASE_IMAGE: ["nvidia/cudagl:10.0-devel-ubuntu18.04", "nvidia/cudagl:11.0-devel-ubuntu20.04"]
+        include:
+          - BASE_IMAGE: "nvidia/cudagl:10.0-devel-ubuntu18.04"
+            WEBOTS_PACKAGE_PREFIX: "_ubuntu-16.04"
     if: github.event_name == 'push'
     steps:
       - uses: actions/checkout@v2
@@ -69,7 +75,7 @@ jobs:
           echo ::set-env name=IMAGE_TAG::$IMAGE_TAG-ubuntu${{ matrix.UBUNTU_VERSION }}
           echo ::set-env name=WEBOTS_VERSION::$WEBOTS_VERSION
       - name: Build image
-        run: docker build . --file Dockerfile --tag $IMAGE_NAME:$IMAGE_TAG --build-arg WEBOTS_VERSION=$WEBOTS_VERSION --build-arg UBUNTU_VERSION=${{ matrix.UBUNTU_VERSION }}
+        run: docker build . --file Dockerfile --tag $IMAGE_NAME:$IMAGE_TAG --build-arg WEBOTS_VERSION=$WEBOTS_VERSION --build-arg BASE_IMAGE=${{ matrix.BASE_IMAGE }} --build-arg WEBOTS_PACKAGE_PREFIX=${{ matrix.WEBOTS_PACKAGE_PREFIX }}
       - name: Log into registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
       - name: Push image
