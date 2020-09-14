@@ -25,7 +25,7 @@ jobs:
     - name: Determine Version
       run: |
         # Strip git ref prefix from version
-        IMAGE_TAG=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+        IMAGE_TAG=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')${${{ matrix.BASE_IMAGE }}: -12}
         # Use Docker `latest` tag convention
         [ "$IMAGE_TAG" == "master" ] && IMAGE_TAG=latest
         # Webots version
@@ -34,7 +34,7 @@ jobs:
         # Display and save
         echo IMAGE_TAG=$IMAGE_TAG
         echo WEBOTS_VERSION=$WEBOTS_VERSION
-        echo ::set-env name=IMAGE_TAG::$IMAGE_TAG-ubuntu${{ matrix.UBUNTU_VERSION }}
+        echo ::set-env name=IMAGE_TAG::$IMAGE_TAG
         echo ::set-env name=WEBOTS_VERSION::$WEBOTS_VERSION
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag $IMAGE_NAME:$IMAGE_TAG --build-arg WEBOTS_VERSION=$WEBOTS_VERSION --build-arg BASE_IMAGE=${{ matrix.BASE_IMAGE }} --build-arg WEBOTS_PACKAGE_PREFIX=${{ matrix.WEBOTS_PACKAGE_PREFIX }}
@@ -61,7 +61,7 @@ jobs:
           # Change all uppercase to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
           # Strip git ref prefix from version
-          IMAGE_TAG=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          IMAGE_TAG=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')${${{ matrix.BASE_IMAGE }}: -12}
           # Use Docker `latest` tag convention
           [ "$IMAGE_TAG" == "master" ] && IMAGE_TAG=latest
           # Webots version
