@@ -25,7 +25,7 @@ jobs:
     - name: Determine Version
       run: |
         # Strip git ref prefix from version
-        IMAGE_TAG=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,') | sed -e 's,\_.*,,'
+        IMAGE_TAG=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,' | sed -e 's,\_.*,,')
         # Use Docker `latest` tag convention
         [ "$IMAGE_TAG" == "master" ] && IMAGE_TAG=latest
         # Webots version
@@ -61,7 +61,7 @@ jobs:
           # Change all uppercase to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
           # Strip git ref prefix from version
-          IMAGE_TAG=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,') | sed -e 's,\_.*,,'
+          IMAGE_TAG=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,' | sed -e 's,\_.*,,')
           # Use Docker `latest` tag convention
           [ "$IMAGE_TAG" == "master" ] && IMAGE_TAG=latest
           # Webots version
