@@ -72,8 +72,8 @@ jobs:
           echo IMAGE_TAG=$IMAGE_TAG
           echo WEBOTS_VERSION=$WEBOTS_VERSION
           echo "IMAGE_ID=${IMAGE_ID}" >> $GITHUB_ENV
-          echo "IMAGE_TAG=$IMAGE_TAG-ubuntu${{ matrix.UBUNTU_VERSION }}" >> $GITHUB_ENV
-          echo "WEBOTS_VERSION=$WEBOTS_VERSION" >> $GITHUB_ENV
+          echo "IMAGE_TAG=${IMAGE_TAG}-ubuntu${{ matrix.UBUNTU_VERSION }}" >> $GITHUB_ENV
+          echo "WEBOTS_VERSION=${WEBOTS_VERSION}" >> $GITHUB_ENV
       - name: Build image
         run: docker build . --file Dockerfile --tag $IMAGE_NAME:$IMAGE_TAG --build-arg WEBOTS_VERSION=$WEBOTS_VERSION --build-arg BASE_IMAGE=${{ matrix.BASE_IMAGE }} --build-arg WEBOTS_PACKAGE_PREFIX=${{ matrix.WEBOTS_PACKAGE_PREFIX }}
       - name: Log into registry
