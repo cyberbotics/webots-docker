@@ -19,7 +19,7 @@ jobs:
         BASE_IMAGE: ["nvidia/cudagl:10.0-devel-ubuntu18.04", "nvidia/cudagl:11.0-devel-ubuntu20.04"]
         include:
           - BASE_IMAGE: "nvidia/cudagl:10.0-devel-ubuntu18.04"
-            WEBOTS_PACKAGE_PREFIX: "_ubuntu-16.04"
+            WEBOTS_PACKAGE_PREFIX: "_ubuntu-18.04"
     steps:
     - uses: actions/checkout@v2
     - name: Determine Version
@@ -51,7 +51,7 @@ jobs:
         BASE_IMAGE: ["nvidia/cudagl:10.0-devel-ubuntu18.04", "nvidia/cudagl:11.0-devel-ubuntu20.04"]
         include:
           - BASE_IMAGE: "nvidia/cudagl:10.0-devel-ubuntu18.04"
-            WEBOTS_PACKAGE_PREFIX: "_ubuntu-16.04"
+            WEBOTS_PACKAGE_PREFIX: "_ubuntu-18.04"
     if: github.event_name == 'push'
     steps:
       - uses: actions/checkout@v2
