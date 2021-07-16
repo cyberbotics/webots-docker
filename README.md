@@ -11,7 +11,7 @@ To use the already available image please follow the [Webots installation instru
 Use the following commands to build the docker container from the Dockerfile:
 
 ```
-docker build . --file Dockerfile --tag webots:latest [--build-arg BASE_IMAGE=nvidia/cudagl:10.0-devel-ubuntu18.04] [--build-arg WEBOTS_VERSION=R2021a] [--build-arg WEBOTS_PACKAGE_PREFIX=_ubuntu-18.04]
+docker build . --file Dockerfile --tag webots:latest [--build-arg BASE_IMAGE=nvidia/cudagl:10.0-devel-ubuntu18.04] [--build-arg WEBOTS_VERSION=R2021b] [--build-arg WEBOTS_PACKAGE_PREFIX=_ubuntu-18.04]
 ```
 
 ## Run a Docker container from the Image
