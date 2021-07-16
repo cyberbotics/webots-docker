@@ -5,7 +5,7 @@ FROM ${BASE_IMAGE}
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Determine Webots version to be used and set default argument
-ARG WEBOTS_VERSION=R2021a
+ARG WEBOTS_VERSION=R2021b
 ARG WEBOTS_PACKAGE_PREFIX=
 
 # Install Webots runtime dependencies
