@@ -9,7 +9,7 @@ on:
 
 env:
   IMAGE_NAME: webots
-  DEFAULT_WEBOTS_VERSION: R2021b
+  DEFAULT_WEBOTS_VERSION: R2022a
 
 jobs:
   dockerhub-publication:
