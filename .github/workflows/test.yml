@@ -36,5 +36,5 @@ jobs:
           git clone --depth 1 --recurse-submodules -j8 https://github.com/cyberbotics/webots.git -b master
           docker run --name webots -i -v $PWD/webots/tests:/usr/local/webots/tests cyberbotics/webots:latest bash
           docker start webots
-          docker exec -i webots bash -c "xvfb-run python tests/test_suite.py"
+          docker exec -i webots bash -c "xvfb-run python3 tests/test_suite.py"
 
