@@ -30,7 +30,6 @@ jobs:
     if: ${{ contains(github.event.pull_request.labels.*.name, 'test suite')
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
       - name: Run test suite
         run: |
           ls -l
