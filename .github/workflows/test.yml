@@ -27,7 +27,7 @@ jobs:
   #           docker build . --file Dockerfile --build-arg BASE_IMAGE=${{ matrix.BASE_IMAGE }} --build-arg WEBOTS_PACKAGE_PREFIX=${{ matrix.WEBOTS_PACKAGE_PREFIX }}
   #         fi
   test-suite:
-    if: ${{ contains(github.event.pull_request.labels.*.name, 'test suite')
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'test suite') }}
     runs-on: ubuntu-latest
     steps:
       - name: Run test suite
