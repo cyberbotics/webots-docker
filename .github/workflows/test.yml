@@ -1,26 +1,41 @@
 name: Test
 
 on:
-  push:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+  #push:
 
 jobs:
   # Run tests.
   # See also https://docs.docker.com/docker-hub/builds/automated-testing/
-  test:
+  # test:
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       BASE_IMAGE: ["nvidia/cudagl:10.0-devel-ubuntu18.04", "nvidia/cudagl:11.0-devel-ubuntu20.04"]
+  #       include:
+  #         - BASE_IMAGE: "nvidia/cudagl:10.0-devel-ubuntu18.04"
+  #           WEBOTS_PACKAGE_PREFIX: "_ubuntu-18.04"
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Run tests
+  #       run: |
+  #         if [ -f docker-compose.test.yml ]; then
+  #           docker-compose --file docker-compose.test.yml build
+  #           docker-compose --file docker-compose.test.yml run sut
+  #         else
+  #           docker build . --file Dockerfile --build-arg BASE_IMAGE=${{ matrix.BASE_IMAGE }} --build-arg WEBOTS_PACKAGE_PREFIX=${{ matrix.WEBOTS_PACKAGE_PREFIX }}
+  #         fi
+  test-suite:
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'test suite')
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        BASE_IMAGE: ["nvidia/cudagl:10.0-devel-ubuntu18.04", "nvidia/cudagl:11.0-devel-ubuntu20.04"]
-        include:
-          - BASE_IMAGE: "nvidia/cudagl:10.0-devel-ubuntu18.04"
-            WEBOTS_PACKAGE_PREFIX: "_ubuntu-18.04"
     steps:
       - uses: actions/checkout@v2
-      - name: Run tests
+      - name: Run test suite
         run: |
-          if [ -f docker-compose.test.yml ]; then
-            docker-compose --file docker-compose.test.yml build
-            docker-compose --file docker-compose.test.yml run sut
-          else
-            docker build . --file Dockerfile --build-arg BASE_IMAGE=${{ matrix.BASE_IMAGE }} --build-arg WEBOTS_PACKAGE_PREFIX=${{ matrix.WEBOTS_PACKAGE_PREFIX }}
-          fi
+          ls -l
+          git clone --depth 1 --recurse-submodules -j8 https://github.com/cyberbotics/webots.git -b master
+          docker run --name webots -i -v $PWD/webots/tests:/usr/local/webots/tests cyberbotics/webots:latest bash
+          docker start webots
+          docker exec -i webots bash -c "xvfb-run python tests/test_suite.py"
+
