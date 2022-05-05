@@ -11,9 +11,9 @@ ARG WEBOTS_VERSION=R2022a
 ARG WEBOTS_PACKAGE_PREFIX=
 
 # Install Webots runtime dependencies
-RUN echo {BASE_IMAGE}
+RUN echo $BASE_IMAGE
 RUN apt-key del 7fa2af80
-RUN https://developer.download.nvidia.com/compute/cuda/repos/ubuntu$(printenv BASE_IMAGE | awk '{print substr($0,length($0)-4,5)}' | awk -F'.' '{print $1$2}')/x86_64/cuda-keyring_1.0-1_all.deb
+RUN https://developer.download.nvidia.com/compute/cuda/repos/ubuntu$(echo $BASE_IMAGE | awk '{print substr($0,length($0)-4,5)}' | awk -F'.' '{print $1$2}')/x86_64/cuda-keyring_1.0-1_all.deb
 RUN dpkg -i cuda-keyring_1.0-1_all.deb
 RUN apt update && apt install --yes wget && rm -rf /var/lib/apt/lists/
 RUN wget https://raw.githubusercontent.com/cyberbotics/webots/master/scripts/install/linux_runtime_dependencies.sh
