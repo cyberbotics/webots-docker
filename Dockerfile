@@ -10,6 +10,7 @@ ARG WEBOTS_PACKAGE_PREFIX=
 
 # Fix NVIDIA CUDA Linux repository key rotation
 RUN apt-key del 7fa2af80
+ENV APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=1
 RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu$(cat /etc/os-release | grep VERSION_ID | awk '{print substr($0,13,5)}' | awk -F'.' '{print $1$2}')/x86_64/3bf863cc.pub
 
 # Install Webots runtime dependencies
