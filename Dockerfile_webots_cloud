@@ -7,10 +7,9 @@ ARG WEBOTS_VERSION=R2022b
 COPY Webots-R2022b.conf /root/.config/Cyberbotics/Webots-$WEBOTS_VERSION.conf
 
 RUN apt update && apt install --yes unzip
-# RUN wget https://github.com/cyberbotics/webots/releases/download/$WEBOTS_VERSION/assets-$WEBOTS_VERSION.zip
-RUN wget https://github.com/cyberbotics/webots/releases/download/nightly_5_7_2022/assets-$WEBOTS_VERSION.zip
+RUN wget https://github.com/cyberbotics/webots/releases/download/$WEBOTS_VERSION/assets-$WEBOTS_VERSION.zip
 RUN mkdir assets
 RUN cp assets-$WEBOTS_VERSION.zip assets/
 RUN cd assets && unzip assets-$WEBOTS_VERSION.zip && cd .. && rm assets-$WEBOTS_VERSION.zip
 RUN mkdir -p /root/.cache/Cyberbotics/Webots/
-RUN ls && mv assets /root/.cache/Cyberbotics/Webots/
+RUN mv assets /root/.cache/Cyberbotics/Webots/
