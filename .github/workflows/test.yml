@@ -10,10 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        BASE_IMAGE: ["nvidia/cudagl:11.4.2-devel-ubuntu20.04"]
-        include:
-          - BASE_IMAGE: "nvidia/cudagl:11.4.2-devel-ubuntu20.04"
-            WEBOTS_PACKAGE_PREFIX: "_ubuntu-20.04"
+        BASE_IMAGE: ["nvidia/cudagl:11.4.2-devel-ubuntu20.04"]  
     steps:
       - uses: actions/checkout@v2
       - name: Run tests
