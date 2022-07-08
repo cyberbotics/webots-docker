@@ -9,17 +9,18 @@ on:
 
 env:
   IMAGE_NAME: webots
-  DEFAULT_WEBOTS_VERSION: R2022a
+  CLOUD_IMAGE_NAME: webots.cloud
+  DEFAULT_WEBOTS_VERSION: R2022b
 
 jobs:
   dockerhub-publication:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        BASE_IMAGE: ["nvidia/cudagl:11.4.2-devel-ubuntu18.04", "nvidia/cudagl:11.4.2-devel-ubuntu20.04"]
+        BASE_IMAGE: ["nvidia/cudagl:11.4.2-devel-ubuntu20.04"]
         include:
-          - BASE_IMAGE: "nvidia/cudagl:11.4.2-devel-ubuntu18.04"
-            WEBOTS_PACKAGE_PREFIX: "_ubuntu-18.04"
+          - BASE_IMAGE: "nvidia/cudagl:11.4.2-devel-ubuntu20.04"
+            WEBOTS_PACKAGE_PREFIX: "_ubuntu-20.04"
     steps:
     - uses: actions/checkout@v2
     - name: Determine Version
@@ -38,28 +39,33 @@ jobs:
         echo "WEBOTS_VERSION=${WEBOTS_VERSION}" >> $GITHUB_ENV
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag $IMAGE_NAME:$IMAGE_TAG --build-arg WEBOTS_VERSION=$WEBOTS_VERSION --build-arg BASE_IMAGE=${{ matrix.BASE_IMAGE }} --build-arg WEBOTS_PACKAGE_PREFIX=${{ matrix.WEBOTS_PACKAGE_PREFIX }}
+      run: docker build . --file Dockerfile_webots_cloud --tag $CLOUD_IMAGE_NAME:$IMAGE_TAG --build-arg WEBOTS_VERSION=$WEBOTS_VERSION --build-arg BASE_IMAGE=$IMAGE_NAME:$IMAGE_TAG
     - name: Log into registry
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login --username=${{ secrets.DOCKER_USERNAME }} --password-stdin
     - name: Push image
       run: |
         docker tag $IMAGE_NAME:$IMAGE_TAG ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:$IMAGE_TAG
+        docker tag $CLOUD_IMAGE_NAME:$IMAGE_TAG ${{ secrets.DOCKER_USERNAME }}/$CLOUD_IMAGE_NAME:$IMAGE_TAG
         docker push ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:$IMAGE_TAG
+        docker push ${{ secrets.DOCKER_USERNAME }}/$CLOUD_IMAGE_NAME:$IMAGE_TAG
   github-publication:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        BASE_IMAGE: ["nvidia/cudagl:11.4.2-devel-ubuntu18.04", "nvidia/cudagl:11.4.2-devel-ubuntu20.04"]
+        BASE_IMAGE: [nvidia/cudagl:11.4.2-devel-ubuntu20.04"]
         include:
-          - BASE_IMAGE: "nvidia/cudagl:11.4.2-devel-ubuntu18.04"
-            WEBOTS_PACKAGE_PREFIX: "_ubuntu-18.04"
+          - BASE_IMAGE: "nvidia/cudagl:11.4.2-devel-ubuntu20.04"
+            WEBOTS_PACKAGE_PREFIX: "_ubuntu-20.04"
     if: github.event_name == 'push'
     steps:
       - uses: actions/checkout@v2
       - name: Determine Version
         run: |
           IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
+          CLOUD_IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$CLOUD_IMAGE_NAME
           # Change all uppercase to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          CLOUD_IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
           # Strip git ref prefix from version
           IMAGE_TAG=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,' | sed -e 's,\_.*,,')
           # Use Docker `latest` tag convention
@@ -69,16 +75,21 @@ jobs:
           [ "$IMAGE_TAG" == "latest" ] && WEBOTS_VERSION=$DEFAULT_WEBOTS_VERSION
           # Display and save
           echo IMAGE_ID=$IMAGE_ID
+          echo CLOUD_IMAGE_ID=$CLOUD_IMAGE_ID
           echo IMAGE_TAG=$IMAGE_TAG
           echo WEBOTS_VERSION=$WEBOTS_VERSION
           echo "IMAGE_ID=${IMAGE_ID}" >> $GITHUB_ENV
+          echo "CLOUD_IMAGE_ID=${CLOUD_IMAGE_ID}" >> $GITHUB_ENV
           echo "IMAGE_TAG=${IMAGE_TAG}-ubuntu${{ matrix.UBUNTU_VERSION }}" >> $GITHUB_ENV
           echo "WEBOTS_VERSION=${WEBOTS_VERSION}" >> $GITHUB_ENV
       - name: Build image
         run: docker build . --file Dockerfile --tag $IMAGE_NAME:$IMAGE_TAG --build-arg WEBOTS_VERSION=$WEBOTS_VERSION --build-arg BASE_IMAGE=${{ matrix.BASE_IMAGE }} --build-arg WEBOTS_PACKAGE_PREFIX=${{ matrix.WEBOTS_PACKAGE_PREFIX }}
+        run: docker build . --file Dockerfile --tag $CLOUD_IMAGE_NAME:$IMAGE_TAG --build-arg WEBOTS_VERSION=$WEBOTS_VERSION --build-arg BASE_IMAGE=$IMAGE_NAME:$IMAGE_TAG
       - name: Log into registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
       - name: Push image
         run: |
           docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_ID:$IMAGE_TAG
           docker push $IMAGE_ID:$IMAGE_TAG
+          docker tag $CLOUD_IMAGE_NAME:$IMAGE_TAG $CLOUD_IMAGE_ID:$IMAGE_TAG
+          docker push $CLOUD_IMAGE_ID:$IMAGE_TAG
