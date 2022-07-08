@@ -5,7 +5,7 @@ FROM ${BASE_IMAGE}
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Determine Webots version to be used and set default argument
-ARG WEBOTS_VERSION=R2022a
+ARG WEBOTS_VERSION=R2022b
 ARG WEBOTS_PACKAGE_PREFIX=
 
 # Fix NVIDIA CUDA Linux repository key rotation
