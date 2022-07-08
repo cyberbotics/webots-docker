@@ -18,5 +18,5 @@ docker build . --file Dockerfile --tag cyberbotics/webots:latest [--build-arg BA
 
 You can run the previously built image with:
 ```
-docker run -it webots:latest /bin/bash
+docker run -it cyberbotics/webots:latest /bin/bash
 ```
