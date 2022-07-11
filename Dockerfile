@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=nvidia/opengl:1.2-glvnd-devel-ubuntu20.04
+ARG BASE_IMAGE=nvidia/opengl:1.2-glvnd-runtime-ubuntu20.04
 FROM ${BASE_IMAGE} AS downloader
 
 # Determine Webots version to be used and set default argument
