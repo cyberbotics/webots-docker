@@ -27,3 +27,9 @@ You can run the previously built image with:
 ```
 docker run -it cyberbotics/webots:latest /bin/bash
 ```
+
+## Clean the temporary Images
+You can run the following command to remove **all** temporary images:
+```
+docker system prune -f
+```
