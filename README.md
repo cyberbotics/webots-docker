@@ -8,10 +8,17 @@ To use the already available image please follow the [Webots installation instru
 
 ## Build the Image
 
-Use the following commands to build the docker container from the Dockerfile:
+Use the following command to build the docker container from the Dockerfile:
 
 ```
-docker build . --file Dockerfile --tag cyberbotics/webots:latest [--build-arg BASE_IMAGE=nvidia/cudagl:10.0-devel-ubuntu20.04] [--build-arg WEBOTS_VERSION=R2022b] [--build-arg WEBOTS_PACKAGE_PREFIX=_ubuntu-20.04]
+docker build . --file Dockerfile --tag cyberbotics/webots:latest [--build-arg BASE_IMAGE=nvidia/opengl:1.2-glvnd-runtime-ubuntu20.04] [--build-arg WEBOTS_VERSION=R2022b] [--build-arg WEBOTS_PACKAGE_PREFIX=_ubuntu-20.04]
+```
+
+## Build the Webots.Cloud Images
+
+Use the following command to build the docker container from the Dockerfile_webots_cloud:
+```
+docker build . --file Dockerfile_webots_cloud --tag cyberbotics/webots.cloud:latest [--build-arg BASE_IMAGE=cyberbotics/webots:latest] [--build-arg WEBOTS_VERSION=R2022b]
 ```
 
 ## Run a Docker container from the Image
@@ -19,4 +26,10 @@ docker build . --file Dockerfile --tag cyberbotics/webots:latest [--build-arg BA
 You can run the previously built image with:
 ```
 docker run -it cyberbotics/webots:latest /bin/bash
+```
+
+## Clean the temporary Images
+You can run the following command to remove **all** temporary images:
+```
+docker system prune
 ```
