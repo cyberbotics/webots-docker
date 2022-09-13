@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        BASE_IMAGE: ["nvidia/cudagl:11.4.2-devel-ubuntu20.04"]
+        BASE_IMAGE: ["nvidia/opengl:1.2-glvnd-runtime-ubuntu20.04"]
     steps:
     - uses: actions/checkout@v2
     - name: Determine Version
@@ -48,7 +48,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        BASE_IMAGE: ["nvidia/cudagl:11.4.2-devel-ubuntu20.04"]
+        BASE_IMAGE: ["nvidia/opengl:1.2-glvnd-runtime-ubuntu20.04"]
     if: github.event_name == 'push'
     steps:
       - uses: actions/checkout@v2
