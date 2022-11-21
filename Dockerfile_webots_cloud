@@ -10,6 +10,7 @@ RUN apt update && apt install --yes unzip && \
   cd assets && unzip assets-$WEBOTS_VERSION.zip && rm assets-$WEBOTS_VERSION.zip
 
 FROM $BASE_IMAGE
+ARG WEBOTS_VERSION=R2022b
 
 COPY Webots-R2022b.conf /root/.config/Cyberbotics/Webots-$WEBOTS_VERSION.conf
 COPY --from=downloader /usr/local/assets /root/.cache/Cyberbotics/Webots/assets/
