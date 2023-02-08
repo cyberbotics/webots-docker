@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        BASE_IMAGE: ["nvidia/opengl:1.2-glvnd-runtime-ubuntu20.04"]
+        BASE_IMAGE: ["nvidia/cuda:11.8.0-base-ubuntu22.04"]
     steps:
     - uses: actions/checkout@v2
     - name: Determine Version
@@ -25,7 +25,7 @@ jobs:
         # Use Docker `latest` tag convention
         [ "$IMAGE_TAG" == "master" ] && IMAGE_TAG=latest
         # Webots version
-        [ "$IMAGE_TAG" != "latest" ] && WEBOTS_VERSION=$IMAGE_TAG && IMAGE_TAG=$IMAGE_TAG-$(cut -d'-' -f4 <<<"${{ matrix.BASE_IMAGE }}")
+        [ "$IMAGE_TAG" != "latest" ] && WEBOTS_VERSION=$IMAGE_TAG && IMAGE_TAG=$IMAGE_TAG-$(cut -d'-' -f3 <<<"${{ matrix.BASE_IMAGE }}")
         [ "$IMAGE_TAG" == "latest" ] && WEBOTS_VERSION=$DEFAULT_WEBOTS_VERSION
         # Display and save
         echo IMAGE_TAG=$IMAGE_TAG
@@ -48,7 +48,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        BASE_IMAGE: ["nvidia/opengl:1.2-glvnd-runtime-ubuntu20.04"]
+        BASE_IMAGE: ["nvidia/cuda:11.8.0-base-ubuntu22.04"]
     if: github.event_name == 'push'
     steps:
       - uses: actions/checkout@v2
@@ -64,7 +64,7 @@ jobs:
           # Use Docker `latest` tag convention
           [ "$IMAGE_TAG" == "master" ] && IMAGE_TAG=latest
           # Webots version
-          [ "$IMAGE_TAG" != "latest" ] && WEBOTS_VERSION=$IMAGE_TAG && IMAGE_TAG=$IMAGE_TAG-$(cut -d'-' -f4 <<<"${{ matrix.BASE_IMAGE }}")
+          [ "$IMAGE_TAG" != "latest" ] && WEBOTS_VERSION=$IMAGE_TAG && IMAGE_TAG=$IMAGE_TAG-$(cut -d'-' -f3 <<<"${{ matrix.BASE_IMAGE }}")
           [ "$IMAGE_TAG" == "latest" ] && WEBOTS_VERSION=$DEFAULT_WEBOTS_VERSION
           # Display and save
           echo IMAGE_ID=$IMAGE_ID
