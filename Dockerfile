@@ -30,7 +30,7 @@ ENV WEBOTS_HOME /usr/local/webots
 ENV PATH /usr/local/webots:${PATH}
 
 # Enable OpenGL capabilities
-ENV NVIDIA_DRIVER_CAPABILITIES=graphics
+ENV NVIDIA_DRIVER_CAPABILITIES graphics,compute,utility
 
 # Finally open a bash command to let the user interact
 CMD ["/bin/bash"]
