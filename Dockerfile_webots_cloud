@@ -2,7 +2,7 @@ ARG BASE_IMAGE=cyberbotics/webots:latest
 FROM $BASE_IMAGE AS downloader
 
 # Determine Webots version to be used and set default argument
-ARG WEBOTS_VERSION=R2023a
+ARG WEBOTS_VERSION=R2023b
 
 RUN apt update && apt install --yes unzip && \
   wget https://github.com/cyberbotics/webots/releases/download/$WEBOTS_VERSION/assets-$WEBOTS_VERSION.zip && \
@@ -10,7 +10,7 @@ RUN apt update && apt install --yes unzip && \
   cd assets && unzip assets-$WEBOTS_VERSION.zip && rm assets-$WEBOTS_VERSION.zip
 
 FROM $BASE_IMAGE
-ARG WEBOTS_VERSION=R2023a
+ARG WEBOTS_VERSION=R2023b
 
-COPY Webots-R2023a.conf /root/.config/Cyberbotics/Webots-$WEBOTS_VERSION.conf
+COPY Webots-R2023b.conf /root/.config/Cyberbotics/Webots-$WEBOTS_VERSION.conf
 COPY --from=downloader /usr/local/assets /root/.cache/Cyberbotics/Webots/assets/

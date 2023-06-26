@@ -8,7 +8,7 @@ on:
 env:
   IMAGE_NAME: webots
   CLOUD_IMAGE_NAME: webots.cloud
-  DEFAULT_WEBOTS_VERSION: R2023a
+  DEFAULT_WEBOTS_VERSION: R2023b
 
 jobs:
   dockerhub-publication:
