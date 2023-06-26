@@ -12,7 +12,7 @@ To use the already available image please follow the [Webots installation instru
 Use the following command to build the docker container from the Dockerfile:
 
 ``` bash
-docker build . --file Dockerfile --tag cyberbotics/webots:latest [--build-arg BASE_IMAGE=nvidia/cuda:11.8.0-base-ubuntu22.04] [--build-arg WEBOTS_VERSION=R2023a] [--build-arg WEBOTS_PACKAGE_PREFIX=_ubuntu-22.04]
+docker build . --file Dockerfile --tag cyberbotics/webots:latest [--build-arg BASE_IMAGE=nvidia/cuda:11.8.0-base-ubuntu22.04] [--build-arg WEBOTS_VERSION=R2023b] [--build-arg WEBOTS_PACKAGE_PREFIX=_ubuntu-22.04]
 ```
 
 ## Build the Webots.Cloud Images
@@ -20,7 +20,7 @@ docker build . --file Dockerfile --tag cyberbotics/webots:latest [--build-arg BA
 Use the following command to build the docker container from the Dockerfile_webots_cloud:
 
 ``` bash
-docker build . --file Dockerfile_webots_cloud --tag cyberbotics/webots.cloud:latest [--build-arg BASE_IMAGE=cyberbotics/webots:latest] [--build-arg WEBOTS_VERSION=R2023a]
+docker build . --file Dockerfile_webots_cloud --tag cyberbotics/webots.cloud:latest [--build-arg BASE_IMAGE=cyberbotics/webots:latest] [--build-arg WEBOTS_VERSION=R2023b]
 ```
 
 ## Run a Docker container from the Image
