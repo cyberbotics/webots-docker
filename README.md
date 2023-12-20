@@ -23,6 +23,7 @@ Use the following command to build the docker container from the Dockerfile Webo
 
 ``` bash
 docker build . --file dockerfiles/Dockerfile.cloud --tag cyberbotics/webots.cloud:latest --build-arg BASE_IMAGE=cyberbotics/webots:latest --build-arg WEBOTS_VERSION=R2023b
+
 ```
 
 ## Run a Docker container from the Image
