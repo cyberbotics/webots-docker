@@ -1,0 +1,45 @@
+version: "3.9"
+services:
+  webots_cloud:
+    build:
+      context: ..
+      dockerfile: dockerfiles/Dockerfile.cloud
+      # target: dev
+      args:
+        - WORKSPACE_DIR=${WORKSPACE_DIR}
+        - USERNAME=developer
+        # - USERNAME=${USERNAME:-developer}
+        - UID=${UID:-1000}
+        - GID=${UID:-1000}
+    container_name: webots_cloud
+    environment:
+      - ROS_MASTER_URI=http://${ROBOT_IP}:11311
+      - ROS_IP=${YOUR_IP}
+    image: webots_cloud_template:devel
+    network_mode: "host"
+    tty: true
+    volumes:
+      - ../src:/${WORKSPACE_DIR}/src
+      - ../config/Webots-R2023b.conf:/Webots-R2023b.conf
+  webots_nvidia:
+    build:
+      context: ..
+      dockerfile: dockerfiles/Dockerfile.nvidia
+      # target: dev
+      args:
+        - WORKSPACE_DIR=${WORKSPACE_DIR}
+        - USERNAME=developer
+        # - USERNAME=${USERNAME:-developer}
+        - UID=${UID:-1000}
+        - GID=${UID:-1000}
+    container_name: webots_cloud
+    environment:
+      - ROS_MASTER_URI=http://${ROBOT_IP}:11311
+      - ROS_IP=${YOUR_IP}
+    image: webots_cloud_template:devel
+    network_mode: "host"
+    tty: true
+    volumes:
+      - ../src:/${WORKSPACE_DIR}/src
+      - ../config/Webots-R2023b.conf:/Webots-R2023b.conf
+
