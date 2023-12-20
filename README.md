@@ -7,28 +7,42 @@
 This repository is used to create a Docker image with Webots already pre-installed.
 To use the already available image please follow the [Webots installation instructions](https://cyberbotics.com/doc/guide/installation-procedure#installing-the-docker-image).
 
-## Build the Image
+## Build the Images
 
 Use the following command to build the docker container from the Dockerfile:
 
+### Build with Nvidia
+
 ``` bash
-docker build . --file Dockerfile --tag cyberbotics/webots:latest [--build-arg BASE_IMAGE=nvidia/cuda:11.8.0-base-ubuntu22.04] [--build-arg WEBOTS_VERSION=R2023b] [--build-arg WEBOTS_PACKAGE_PREFIX=_ubuntu-22.04]
+docker build . --file dockerfiles/Dockerfile.nvidia --tag cyberbotics/webots:latest --build-arg BASE_IMAGE=nvidia/cuda:11.8.0-base-ubuntu22.04 --build-arg WEBOTS_VERSION=R2023b --build-arg WEBOTS_PACKAGE_PREFIX=_ubuntu-22.04
 ```
 
-## Build the Webots.Cloud Images
+### Build the Webots.Cloud Images
 
-Use the following command to build the docker container from the Dockerfile_webots_cloud:
+Use the following command to build the docker container from the Dockerfile Webots Cloud:
 
 ``` bash
-docker build . --file Dockerfile_webots_cloud --tag cyberbotics/webots.cloud:latest [--build-arg BASE_IMAGE=cyberbotics/webots:latest] [--build-arg WEBOTS_VERSION=R2023b]
+docker build . --file dockerfiles/Dockerfile.cloud --tag cyberbotics/webots.cloud:latest --build-arg BASE_IMAGE=cyberbotics/webots:latest --build-arg WEBOTS_VERSION=R2023b
 ```
 
 ## Run a Docker container from the Image
 
-You can run the previously built image with:
+
+### Running Webots in Docker with GPU Support
 
 ``` bash
-docker run -it cyberbotics/webots:latest /bin/bash
+docker run --gpus=all -it -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix cyberbotics/webots:latest webots --stdout --stderr --batch --mode=realtime
+```
+### Running Webots with GPU in Container
+
+``` bash
+docker run --gpus=all -it -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix cyberbotics/webots:latest /bin/bash
+```
+
+### Running Container
+
+``` bash
+docker run -it -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix cyberbotics/webots:latest /bin/bash
 ```
 
 ## Clean the temporary Images
