@@ -19,5 +19,5 @@ jobs:
             docker-compose --file docker-compose.test.yml build
             docker-compose --file docker-compose.test.yml run sut
           else
-            docker build . --file Dockerfile --build-arg BASE_IMAGE=${{ matrix.BASE_IMAGE }} --build-arg WEBOTS_PACKAGE_PREFIX=${{ matrix.WEBOTS_PACKAGE_PREFIX }}
+            docker build . --file ./dockerfiles/Dockerfile.nvidia --build-arg BASE_IMAGE=${{ matrix.BASE_IMAGE }} --build-arg WEBOTS_PACKAGE_PREFIX=${{ matrix.WEBOTS_PACKAGE_PREFIX }}
           fi
