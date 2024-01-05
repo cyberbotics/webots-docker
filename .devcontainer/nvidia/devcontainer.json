@@ -1,0 +1,15 @@
+{
+  "name": "Webots Cloud Based",
+  "dockerComposeFile": [
+    "../../docker-composes/docker-compose-gui-nvidia.yml" // Alternatives: "../docker/docker-compose-gui.yml", "../docker/docker-compose-gui-nvidia.yml", "../docker/docker-compose-nvidia.yml"
+  ],
+  "service": "webots_docker",
+  "workspaceFolder": "/workspace",
+  "shutdownAction": "stopCompose",
+  "remoteEnv": {},
+  "postAttachCommand": "",
+  "postCreateCommand": "",
+  "postStartCommand": "",
+  "initializeCommand": "echo 'webots cloud based'",
+  "extensions": [],
+}

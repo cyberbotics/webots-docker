@@ -1,0 +1,9 @@
+version: "3.9"
+services:
+  webots_docker:
+    extends:
+      file: docker-compose.yml
+      service: webots_nvidia
+    environment:
+     - NVIDIA_VISIBLE_DEVICES=all
+    runtime: nvidia
