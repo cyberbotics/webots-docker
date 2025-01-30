@@ -2,7 +2,7 @@ ARG BASE_IMAGE=nvidia/cuda:11.8.0-base-ubuntu22.04
 FROM ${BASE_IMAGE} AS downloader
 
 # Determine Webots version to be used and set default argument
-ARG WEBOTS_VERSION=R2023b
+ARG WEBOTS_VERSION=R2025a
 ARG WEBOTS_PACKAGE_PREFIX=
 
 # Disable dpkg/gdebi interactive dialogs
